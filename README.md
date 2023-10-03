@@ -3,6 +3,7 @@ A random-password generator and password safe written in Python!
 
 ## Prerequisites
 * Python3
+* cryptography-module (<code>pip install cryptography</code>)
 
 ## Usage
 * Download or clone the repository to your disk
