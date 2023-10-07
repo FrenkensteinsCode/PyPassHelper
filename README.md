@@ -22,4 +22,4 @@ Please note: The file has to be decrypted before making new entries. Otherwise n
 Procedure: Decrypt file -> Write to file -> Encrypt file again
 
 ## Considerations
-This program has only been tested on Windows 10 (22H2) so far. It should work on Linux though, too.
+This program has been tested on Windows 10 (22H2) and Linux (kali-rolling 2023.3) so far.
