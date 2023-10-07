@@ -48,7 +48,7 @@ def decrypt_file():
        Then it reads the original file, decrypts the content
        and writes the decrypted content back to the original file.
     '''
-    os.chmod(pwfile_location, stat.S_IWRITE) # Make file writable again
+    os.chmod(pwfile_location, stat.S_IRWXU) # Make file writable again
 
     with open(key_location, 'r') as dec_key_file:
         dec_key = dec_key_file.read()
