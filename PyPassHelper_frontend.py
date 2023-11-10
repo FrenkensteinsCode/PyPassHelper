@@ -2,6 +2,7 @@ from PyPassHelper_backend import *
 from tkinter import *
 from tkinter import messagebox
 from pathlib import Path
+import platform
 
 pwfile_path = Path(pwfile_location)
 
@@ -18,7 +19,8 @@ Version: 1.0.0\n\
 def get_readme_generator():
     rg_text = "\
 The user needs to enter a length value for their password and a brief name or description for the service for which they wish to create a password for.\n\
-By clicking the <Generate password> button, the password will be written to the password file."
+By clicking the <Generate password> button, the password will be written to the password file. The checkbutton <Passphrase> can be pressed in order to \n\
+generate a passphrase consisting of random words of the wordlists instead of a password. In this case, the length is not needed as an input."
     messagebox.showinfo(message=rg_text, title = "ReadMe PW-Generator")
 
 def get_readme_safe():
@@ -33,19 +35,35 @@ Procedure: Decrypt file -> Write to file -> Encrypt file again"
     messagebox.showinfo(message=rs_text, title = "ReadMe PW-Safe")
 
 def genPw():
-        length = int(pw_length.get())
-        service = description.get()
-        password = create_password(length)
-        password = shuffle(password, length)
-        option_label.config(text=f"Password for service {service} written to {pwfile_location}")
-        write_password(password, service)
+    length = int(pw_length.get())
+    service = description.get()
+    password = create_password(length)
+    password = shuffle(password, length)
+    option_label.config(text=f"Password for service {service} written to {pwfile_location}")
+    write_password(password, service)
+
+def genPp():
+    if platform.system() == "Windows":
+        separator = "\\"
+    else:
+        separator ="/"
+
+    l1 = os.getcwd() + separator + "wordlists" + separator + "word1_list.txt"
+    l2 = os.getcwd() + separator + "wordlists" + separator + "word2_list.txt"
+    l3 = os.getcwd() + separator + "wordlists" + separator + "word3_list.txt"
+    l4 = os.getcwd() + separator + "wordlists" + separator + "word4_list.txt"
+
+    service = description.get()
+    passphrase = create_passphrase_from_wordlists([l1,l2,l3,l4])
+    option_label.config(text=f"Passphrase for service {service} written to {pwfile_location}")
+    write_password(passphrase, service)
 
 def addPw():
-        user_pass = existing_pass.get()
-        existing_service = existing_description.get()
-        existing_password = user_pass
-        option_label.config(text=f"Password for service {existing_service} written to {pwfile_location}")
-        write_password(existing_password, existing_service)
+    user_pass = existing_pass.get()
+    existing_service = existing_description.get()
+    existing_password = user_pass
+    option_label.config(text=f"Password for service {existing_service} written to {pwfile_location}")
+    write_password(existing_password, existing_service)
 
 # Button actions
 def button_action_keygen():
@@ -62,11 +80,17 @@ def button_action_dec():
 
 def button_action_genpw():
     if not(pwfile_path.is_file()):
-        genPw()
+        if(secret_type.get()):
+            genPp()
+        else:
+            genPw()
     elif not (os.access(pwfile_location, os.W_OK)):
         option_label.config(text=f"{pwfile_location} is set to read-only mode. Please decrypt first!")
     else:
-        genPw()
+        if(secret_type.get()):
+            genPp()
+        else:
+            genPw()
 
 def button_action_add_exist_pw():
     if not(pwfile_path.is_file()):
@@ -81,7 +105,7 @@ def show_hide_pwd():
     if(visibility.get()):
         existing_pass.config(show="")
     else:
-        existing_pass.config(show="*") 
+        existing_pass.config(show="*")
 
 # Create window and title
 window = Tk()
@@ -117,7 +141,12 @@ userpw_button = Button(window, text="Add existing password", command=button_acti
 # Hidden password button
 visibility = IntVar()
 pw_visibility_button = Checkbutton(window, text ="Show", variable=visibility, onvalue=1, offvalue=0,
-                             height=2, width=5, command=show_hide_pwd)
+                                   height=2, width=5, command=show_hide_pwd)
+
+# Button to switch between password and passphrase
+secret_type = IntVar()
+switch_word_to_phrase_button = Checkbutton(window, text ="Passphrase", variable=secret_type, onvalue=1, offvalue=0,
+                                           height=4, width=10)
 
 # Labels
 length_label = Label(window, text="Password-length: ")
@@ -152,6 +181,7 @@ existing_description_label.grid(row=5, column=2, pady=0, padx=0)
 existing_description.grid(row=5, column=3, pady=0, padx=0)
 
 pw_visibility_button.grid(row=6, column=0, pady=0, padx=0)
+switch_word_to_phrase_button.grid(row=3, column=5, pady=0, padx=0)
 
 menu.add_cascade(label="File", menu=file_menu)
 menu.add_cascade(label="Help", menu=help_menu)

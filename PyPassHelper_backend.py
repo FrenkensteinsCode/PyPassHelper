@@ -1,6 +1,6 @@
 from cryptography.fernet import Fernet
 import os
-import random
+import random as rd
 import stat
 
 ## File location routines
@@ -80,7 +80,7 @@ def shuffle(char_string: str, length: int) -> str:
         raise TypeError(f'The value for the length (i.e. {length}) must be a int type')
     else:
         temp_list = list(char_string)
-        random.shuffle(temp_list)
+        rd.shuffle(temp_list)
         return ''.join(temp_list)[:length]
 
 def create_password(length: int) -> str:
@@ -98,12 +98,38 @@ def create_password(length: int) -> str:
         password = ''
 
         for char in range(length):
-            password += chr(random.randint(33,43)) # Special characters
-            password += chr(random.randint(65,90)) # Upper case
-            password += chr(random.randint(97,122)) # Lower case
-            password += chr(random.randint(48,57)) # Numbers
+            password += chr(rd.randint(33,43)) # Special characters
+            password += chr(rd.randint(65,90)) # Upper case
+            password += chr(rd.randint(97,122)) # Lower case
+            password += chr(rd.randint(48,57)) # Numbers
 
         return password
+    
+def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
+    ''' Select random words from different wordlists and concatenate them in order to generate a passphrase.
+
+        Input:
+            wordlists: Python list containing the absolute paths of different wordlists. You can use >>os.getcwd() + "\wordlist.txt"<< 
+            to describe the path. (type: list[str])
+
+        Output:
+            A passphrase containing randomly chosen words of given wordlists (type: String)
+    '''
+    if not isinstance(wordlists, list):
+        raise TypeError(f'The value for the wordlists (i.e. {wordlists}) must be a list of strings')
+    else:    
+        random_words = []
+        passphrase = ""
+        for wordlist in wordlists:
+            with open(wordlist) as w_l:
+                full_text = w_l.read()
+                words = list(map(str, full_text.split()))
+                random_words.append(rd.choice(words))
+
+        for word in random_words:
+            passphrase += word
+
+    return passphrase
 
 def write_password(password: str, service: str):
     '''Generates or opens an exisiting password-file and stores a password and
