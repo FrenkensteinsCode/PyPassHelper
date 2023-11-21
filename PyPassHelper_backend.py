@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 import os
 import random as rd
+import re
 import stat
 
 ## File location routines
@@ -153,3 +154,38 @@ def write_password(password: str, service: str, pwfile_location: str):
                    + ' | Password: ' + password
                    + '\n')
         file.close()
+
+def check_password_strength(password: str) -> str:
+    ''' Checks the strength of a user defined password and delivers a rating
+
+        Input:
+            password: User-defined password (type: String)
+
+        Return: Rating of password strength
+    '''
+    password_length = len(password)
+    has_digit = re.search(r'\d', password)
+    has_lowercase = re.search(r'[a-z]', password)
+    has_uppercase = re.search(r'[A-Z]', password)
+    has_special_char = re.search(r'\W', password)
+
+    if password_length >= 8:
+        if has_digit and has_lowercase and has_uppercase and has_special_char:
+            return "Excellent"
+        elif has_digit and has_lowercase and has_uppercase:
+            return "Great"
+        elif has_digit and has_lowercase:
+            return "Good"
+        elif has_digit:
+            return "Bad"
+    elif password_length >= 6 and password_length < 8:
+        if has_digit and has_lowercase and has_uppercase and has_special_char:
+            return "Good"
+        elif has_digit and has_lowercase and has_uppercase:
+            return "Ok"
+        elif has_digit and has_lowercase:
+            return "Bad"
+        elif has_digit:
+            return "Very Bad"
+    else:
+        return "Very Bad"
