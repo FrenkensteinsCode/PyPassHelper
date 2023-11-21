@@ -12,8 +12,11 @@ key_location = os.path.join(path, "secret.key")
 pwfile_location = os.path.join(path, "pwfile.txt")
 
 ## Password safe routines
-def key_gen():
-    '''Generate an encryption/decryption key'''
+def key_gen(key_location: str):
+    ''' Generate an encryption/decryption key at the specified location
+        Input:
+            key_location: Location of encryption key (type: String)
+    '''
 
     encryption_key = Fernet.generate_key()
 
@@ -109,8 +112,7 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
     ''' Select random words from different wordlists and concatenate them in order to generate a passphrase.
 
         Input:
-            wordlists: Python list containing the absolute paths of different wordlists. You can use >>os.getcwd() + "\wordlist.txt"<< 
-            to describe the path. (type: list[str])
+            wordlists: Python list containing the absolute paths of different wordlists. (type: list[str])
 
         Output:
             A passphrase containing randomly chosen words of given wordlists (type: String)
@@ -131,13 +133,14 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
 
     return passphrase
 
-def write_password(password: str, service: str):
+def write_password(password: str, service: str, pwfile_location: str):
     '''Generates or opens an exisiting password-file and stores a password and
        its corresponding service-name in it
 
        Input:
            password: The previously generated or given password (type: String)
            service: The user-given corresponding service name (type: String)
+           pwfile_location: Location of password file (type: String)
     '''
 
     if not isinstance(password, str):
