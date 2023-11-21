@@ -15,6 +15,7 @@ pwfile_location = os.path.join(path, "pwfile.txt")
 ## Password safe routines
 def key_gen(key_location: str):
     ''' Generate an encryption/decryption key at the specified location
+    
         Input:
             key_location: Location of encryption key (type: String)
     '''
@@ -25,10 +26,10 @@ def key_gen(key_location: str):
         enc_key_file.write(encryption_key)
 
 def encrypt_file():
-    '''Encrypt a file using a key-file.
-       This function opens keyfile and writes its key to enc_key.
-       Then it reads the original file, encrypts the content
-       and writes the encrypted content back to the original file.
+    ''' Encrypt a file using a key-file.
+        This function opens keyfile and writes its key to enc_key.
+        Then it reads the original file, encrypts the content
+        and writes the encrypted content back to the original file.
     '''
 
     with open(key_location, 'r') as enc_key_file:
@@ -47,10 +48,10 @@ def encrypt_file():
     os.chmod(pwfile_location, stat.S_IREAD) # Set file to read-only
 
 def decrypt_file():
-    '''Decrypt a file using a key-file.
-       This function opens keyfile and writes its key to dec_key.
-       Then it reads the original file, decrypts the content
-       and writes the decrypted content back to the original file.
+    ''' Decrypt a file using a key-file.
+        This function opens keyfile and writes its key to dec_key.
+        Then it reads the original file, decrypts the content
+        and writes the decrypted content back to the original file.
     '''
     os.chmod(pwfile_location, stat.S_IRWXU) # Make file writable again
 
@@ -74,6 +75,7 @@ def shuffle(char_string: str, length: int) -> str:
         Input:
             char_string: String of characters (type: String)
             length: User-defined length for the password (type: int)
+
         Return:
             Shuffled string of characters in given length (type: String)
     '''
@@ -92,6 +94,7 @@ def create_password(length: int) -> str:
 
         Input:
             length: User-defined length for the password to guarantee minimum length (type: int)
+
         Return:
             String with randomly chosen ASCII-characters (type: String)
     '''
@@ -115,7 +118,7 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
         Input:
             wordlists: Python list containing the absolute paths of different wordlists. (type: list[str])
 
-        Output:
+        Return:
             A passphrase containing randomly chosen words of given wordlists (type: String)
     '''
     if not isinstance(wordlists, list):
@@ -135,13 +138,13 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
     return passphrase
 
 def write_password(password: str, service: str, pwfile_location: str):
-    '''Generates or opens an exisiting password-file and stores a password and
-       its corresponding service-name in it
+    ''' Generates or opens an exisiting password-file and stores a password and
+        its corresponding service-name in it
 
-       Input:
-           password: The previously generated or given password (type: String)
-           service: The user-given corresponding service name (type: String)
-           pwfile_location: Location of password file (type: String)
+        Input:
+            password: The previously generated or given password (type: String)
+            service: The user-given corresponding service name (type: String)
+            pwfile_location: Location of password file (type: String)
     '''
 
     if not isinstance(password, str):
@@ -161,7 +164,7 @@ def check_password_strength(password: str) -> str:
         Input:
             password: User-defined password (type: String)
 
-        Return: Rating of password strength
+        Return: Rating of password strength (type: String)
     '''
     password_length = len(password)
     has_digit = re.search(r'\d', password)
