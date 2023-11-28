@@ -12,7 +12,7 @@ def get_info_dialog():
 **********************\n\
 Title: PyPassHelper\n\
 Author: @FrenkensteinsCode\n\
-Version: 1.0.0\n\
+Version: 1.1.0\n\
 **********************"
     messagebox.showinfo(message=m_text, title = "About")
 
