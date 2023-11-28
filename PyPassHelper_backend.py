@@ -68,6 +68,41 @@ def decrypt_file():
     with open(pwfile_location, 'wb') as decrypted_pw_file:
         decrypted_pw_file.write(decrypted_content)
 
+def check_password_strength(password: str) -> str:
+    ''' Checks the strength of a user defined password and delivers a rating
+
+        Input:
+            password: User-defined password (type: String)
+
+        Return: Rating of password strength (type: String)
+    '''
+    password_length = len(password)
+    has_digit = re.search(r'\d', password)
+    has_lowercase = re.search(r'[a-z]', password)
+    has_uppercase = re.search(r'[A-Z]', password)
+    has_special_char = re.search(r'\W', password)
+
+    if password_length >= 8:
+        if has_digit and has_lowercase and has_uppercase and has_special_char:
+            return "Excellent"
+        elif has_digit and has_lowercase and has_uppercase:
+            return "Great"
+        elif has_digit and has_lowercase:
+            return "Good"
+        elif has_digit:
+            return "Bad"
+    elif password_length >= 6 and password_length < 8:
+        if has_digit and has_lowercase and has_uppercase and has_special_char:
+            return "Good"
+        elif has_digit and has_lowercase and has_uppercase:
+            return "Ok"
+        elif has_digit and has_lowercase:
+            return "Bad"
+        elif has_digit:
+            return "Very Bad"
+    else:
+        return "Very Bad"
+
 ## Password generator routines
 def shuffle(char_string: str, length: int) -> str:
     ''' Shuffles a string of characters in order to randomize it
@@ -157,38 +192,3 @@ def write_password(password: str, service: str, pwfile_location: str):
                    + ' | Password: ' + password
                    + '\n')
         file.close()
-
-def check_password_strength(password: str) -> str:
-    ''' Checks the strength of a user defined password and delivers a rating
-
-        Input:
-            password: User-defined password (type: String)
-
-        Return: Rating of password strength (type: String)
-    '''
-    password_length = len(password)
-    has_digit = re.search(r'\d', password)
-    has_lowercase = re.search(r'[a-z]', password)
-    has_uppercase = re.search(r'[A-Z]', password)
-    has_special_char = re.search(r'\W', password)
-
-    if password_length >= 8:
-        if has_digit and has_lowercase and has_uppercase and has_special_char:
-            return "Excellent"
-        elif has_digit and has_lowercase and has_uppercase:
-            return "Great"
-        elif has_digit and has_lowercase:
-            return "Good"
-        elif has_digit:
-            return "Bad"
-    elif password_length >= 6 and password_length < 8:
-        if has_digit and has_lowercase and has_uppercase and has_special_char:
-            return "Good"
-        elif has_digit and has_lowercase and has_uppercase:
-            return "Ok"
-        elif has_digit and has_lowercase:
-            return "Bad"
-        elif has_digit:
-            return "Very Bad"
-    else:
-        return "Very Bad"
