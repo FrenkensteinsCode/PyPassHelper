@@ -65,6 +65,11 @@ def addPw():
     option_label.config(text=f"Password for service {existing_service} written to {pwfile_location}")
     write_password(existing_password, existing_service)
 
+def strength_check():
+    password = existing_pass.get()
+    strength = check_password_strength(password)
+    strength_label.config(text=f"Password-strength: {strength}")
+
 # Button actions
 def button_action_keygen():
     key_gen()
@@ -137,6 +142,7 @@ help_menu.add_command(label="About", command=get_info_dialog)
 # Buttons
 pwgen_button = Button(window, text="Generate password", command=button_action_genpw)
 userpw_button = Button(window, text="Add existing password", command=button_action_add_exist_pw)
+strength_check_button = Button(window, text="Check", command=strength_check)
 
 # Hidden password button
 visibility = IntVar()
@@ -161,6 +167,8 @@ existing_pass = Entry(window, bd=5, width=40, show="*")
 existing_description_label = Label(window, text="Service-description: ")
 existing_description = Entry(window, bd=5, width=40)
 
+strength_label = Label(window)
+
 # Add to window
 headline_label.grid(row=0, column=2, pady=20, padx= 0)
 option_label.grid(row=1, column=2, pady=0, padx=0)
@@ -182,6 +190,9 @@ existing_description.grid(row=5, column=3, pady=0, padx=0)
 
 pw_visibility_button.grid(row=6, column=0, pady=0, padx=0)
 switch_word_to_phrase_button.grid(row=3, column=5, pady=0, padx=0)
+
+strength_check_button.grid(row=6, column=1, pady=0, padx=0)
+strength_label.grid(row=7, column=1, pady=0, padx=0)
 
 menu.add_cascade(label="File", menu=file_menu)
 menu.add_cascade(label="Help", menu=help_menu)
