@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
+import math
 import os
 import random as rd
-import re
 import stat
 
 ## File location routines
@@ -77,31 +77,22 @@ def check_password_strength(password: str) -> str:
         Return: Rating of password strength (type: String)
     '''
     password_length = len(password)
-    has_digit = re.search(r'\d', password)
-    has_lowercase = re.search(r'[a-z]', password)
-    has_uppercase = re.search(r'[A-Z]', password)
-    has_special_char = re.search(r'\W', password)
+    has_digit = any(char.isdigit() for char in password)
+    has_lowercase = any(char.islower() for char in password)
+    has_uppercase = any(char.isupper() for char in password)
+    has_special_char = any(not char.isalnum() for char in password)
 
-    if password_length >= 8:
-        if has_digit and has_lowercase and has_uppercase and has_special_char:
-            return "Excellent"
-        elif has_digit and has_lowercase and has_uppercase:
-            return "Great"
-        elif has_digit and has_lowercase:
-            return "Good"
-        elif has_digit:
-            return "Bad"
-    elif password_length >= 6 and password_length < 8:
-        if has_digit and has_lowercase and has_uppercase and has_special_char:
-            return "Good"
-        elif has_digit and has_lowercase and has_uppercase:
-            return "Ok"
-        elif has_digit and has_lowercase:
-            return "Bad"
-        elif has_digit:
-            return "Very Bad"
+    characters = sum([has_digit, has_lowercase, has_uppercase, has_special_char]) * 26
+    grade = math.log(characters ** password_length, 2) # Common Password entropy function: E = log_2(R^L)
+
+    if grade >= 75:
+        return "Excellent"
+    elif grade >= 50:
+        return "Good"
+    elif grade >= 25:
+        return "Weak"
     else:
-        return "Very Bad"
+        return "Very Weak"
 
 ## Password generator routines
 def shuffle(char_string: str, length: int) -> str:
