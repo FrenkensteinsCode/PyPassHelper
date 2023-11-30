@@ -86,13 +86,13 @@ def check_password_strength(password: str) -> str:
     grade = math.log(characters ** password_length, 2) # Common Password entropy function: E = log_2(R^L)
 
     if grade >= 75:
-        return "Excellent"
+        return f"Excellent (Entropy: {grade:.1f})"
     elif grade >= 50:
-        return "Good"
+        return f"Good (Entropy: {grade:.1f})"
     elif grade >= 25:
-        return "Weak"
+        return f"Weak (Entropy: {grade:.1f})"
     else:
-        return "Very Weak"
+        return f"Very Weak (Entropy: {grade:.1f})"
 
 ## Password generator routines
 def shuffle(char_string: str, length: int) -> str:
