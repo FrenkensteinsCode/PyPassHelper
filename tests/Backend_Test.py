@@ -51,5 +51,12 @@ class Test_Backend_Methods(unittest.TestCase):
     def test_create_passphrase(self):
         pass # Idea is to create a passphrase from predefined wordlists and to check it against the expected string...will implement this later
 
+    def test_password_strength_variations(self):
+        self.assertEqual("Excellent", check_password_strength("123abcDEF!#?")) # Score 75-100
+        self.assertEqual("Good", check_password_strength("123abcDE!#")) # Score 50-74
+        self.assertEqual("Weak", check_password_strength("1abDE!#")) # Score 25-49
+        self.assertEqual("Very Weak", check_password_strength("1aB")) # Score 0-24
+
+
 if __name__ == "__main__":
     unittest.main()
