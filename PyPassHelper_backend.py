@@ -13,7 +13,7 @@ key_location = os.path.join(path, "secret.key")
 pwfile_location = os.path.join(path, "pwfile.txt")
 
 ## Password safe routines
-def key_gen(key_location: str):
+def key_gen():
     ''' Generate an encryption/decryption key at the specified location
     
         Input:
@@ -163,7 +163,7 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
 
     return passphrase
 
-def write_password(password: str, service: str, pwfile_location: str):
+def write_password(password: str, service: str):
     ''' Generates or opens an exisiting password-file and stores a password and
         its corresponding service-name in it
 
