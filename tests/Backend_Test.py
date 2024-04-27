@@ -27,12 +27,14 @@ class Test_Backend_Methods(unittest.TestCase):
             os.remove(self.pwfile_location)
 
     def test_key_is_created_correctly(self):
-        key_gen(self.key_location)
+        update_key_location(self.key_location)
+        key_gen()
         self.assertTrue(os.path.isfile(self.key_location))
         self.key_location_exists = True
 
     def test_pwfile_is_created_correctly(self):
-        write_password("Test_Pass","Test_Service", self.pwfile_location)
+        update_pwfile_location(self.pwfile_location)
+        write_password("Test_Pass","Test_Service")
         self.assertTrue(os.path.isfile(self.pwfile_location))
         self.pwfile_location_exists = True
 
