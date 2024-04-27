@@ -12,13 +12,39 @@ if not os.path.exists(path):
 key_location = os.path.join(path, "secret.key")
 pwfile_location = os.path.join(path, "pwfile.txt")
 
-## Password safe routines
-def key_gen():
-    ''' Generate an encryption/decryption key at the specified location
+def update_key_location(updated_key_loc: str):
+    ''' Update the location of the secret-key file
     
         Input:
-            key_location: Location of encryption key (type: String)
+            updated_key_loc: Path for key file set by user (type: String)
     '''
+
+    global key_location
+    key_location = updated_key_loc
+
+def update_pwfile_location(updated_pwfile_loc: str):
+    ''' Update the location of the password file
+    
+        Input:
+            updated_pwfile_loc: Path for password file set by user (type: String)
+    '''
+
+    global pwfile_location
+    pwfile_location = updated_pwfile_loc
+
+## Helper functions
+def get_key_location():
+    ''' Return the location of the secret-key file '''
+
+    return key_location
+
+def get_pwfile_location():
+    ''' Return the location of the password file '''
+    return pwfile_location
+
+## Password safe routines
+def key_gen():
+    ''' Generate an encryption/decryption key at the specified location '''
 
     encryption_key = Fernet.generate_key()
 
