@@ -131,7 +131,7 @@ window = Tk()
 window.title("PyPassHelper")
 
 # Headline and hint
-headline_label = Label(window, text="A random-password generator and password safe written in Python!")
+headline_label = Label(window, text="A lightweight password-manager written in Python!")
 option_label = Label(window, text="Please enter corresponding values!")
 
 # Create file and help menu

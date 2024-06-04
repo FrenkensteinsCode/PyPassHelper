@@ -1,5 +1,5 @@
 # PyPassHelper
-A random-password generator and password safe written in Python!
+A lightweight password-manager written in Python!
 
 ## Prerequisites
 * Python3
