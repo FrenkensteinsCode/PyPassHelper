@@ -75,10 +75,12 @@ def strength_check():
 def set_key_location():
     key_location = s_key_loc.get()
     update_key_location(key_location)
+    option_label.config(text=f"Success! Location for secret key has been set to: {key_location}")
 
 def set_pwfile_location():
     pwfile_location = pw_file_loc.get()
     update_pwfile_location(pwfile_location)
+    option_label.config(text=f"Success! Location for password file has been set to: {pwfile_location}")
 
 # Button actions
 def button_action_keygen():
