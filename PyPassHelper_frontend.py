@@ -5,8 +5,6 @@ from tkinter import messagebox
 from pathlib import Path
 import platform
 
-#pwfile_path = Path(pwfile_location)
-
 # Info and ReadMe functions
 def get_info_dialog():
     m_text = "\
