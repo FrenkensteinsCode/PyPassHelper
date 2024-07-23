@@ -22,7 +22,11 @@ Please note: The file has to be decrypted before making new entries. Otherwise n
 Procedure: Decrypt file -> Write to file -> Encrypt file again
 
 ## Considerations
-This program has been tested on Windows 10 (22H2) using Python 3.11.2 and Linux (kali-rolling 2024.1) using Python 3.11.8 so far.
+This program has been tested on the following platforms:
+- Windows 10 (22H2) - Python 3.11.2
+  - WSL (kali-rolling 2024.2) - Python 3.11.8
+- Windows 11 (23H2) - Python 3.11.2
+- Rocky Linux 8.10 - Python 3.6.8
 
 ## Preview
 ![image](https://github.com/user-attachments/assets/ab5bd79f-61d7-4e18-aa3c-24d0db402035)
