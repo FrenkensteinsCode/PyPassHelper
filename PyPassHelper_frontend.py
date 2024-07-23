@@ -1,5 +1,6 @@
 from PyPassHelper_backend import *
 from tkinter import *
+from tkinter import filedialog
 from tkinter import messagebox
 from pathlib import Path
 import platform
@@ -12,7 +13,7 @@ def get_info_dialog():
 **********************\n\
 Title: PyPassHelper\n\
 Author: @FrenkensteinsCode\n\
-Version: 1.2.1\n\
+Version: 1.3.0\n\
 **********************"
     messagebox.showinfo(message=m_text, title = "About")
 
@@ -21,14 +22,14 @@ def get_readme_generator():
 The user needs to enter a length value for their password and a brief name or description for the service for which they wish to create a password for.\n\
 By clicking the <Generate password> button, the password will be written to the password file. The checkbutton <Passphrase> can be pressed in order to \n\
 generate a passphrase consisting of random words of the wordlists instead of a password. In this case, the length is not needed as an input.\n\
-The password-file can be stored anywhere the user wants. It can be selected via the location-field."
+The password-file can be stored anywhere the user wants. It can be selected via the appropriate file browser."
     messagebox.showinfo(message=rg_text, title = "ReadMe PW-Generator")
 
 def get_readme_safe():
     rs_text = "\
 At first, the user needs to create a personal secret key via the File-menu.\n\
 This key needs to be stored securely at all times.\n\
-The key can be stored anywhere the user wants. It can be selected via the location-field.\n\
+The key can be stored anywhere the user wants. It can be selected via the appropriate file browser.\n\
 It serves as an encryption/decryption key for the password file.\n\
 The encryption and decryption can be performed via the buttons in the File-menu.\n\
 An already existing password can be entered via the <Existing password> and <Service-description> fields.\n\
@@ -72,16 +73,6 @@ def strength_check():
     strength = check_password_strength(password)
     strength_label.config(text=f"Password-strength: {strength}")
 
-def set_key_location():
-    key_location = s_key_loc.get()
-    update_key_location(key_location)
-    option_label.config(text=f"Success! Location for secret key has been set to: {key_location}")
-
-def set_pwfile_location():
-    pwfile_location = pw_file_loc.get()
-    update_pwfile_location(pwfile_location)
-    option_label.config(text=f"Success! Location for password file has been set to: {pwfile_location}")
-
 # Button actions
 def button_action_keygen():
     key_gen()
@@ -118,6 +109,22 @@ def button_action_add_exist_pw():
         option_label.config(text=f"{get_pwfile_location()} is set to read-only mode. Please decrypt first!")
     else:
         addPw()
+
+def button_action_browse_key_file():
+    key_location = filedialog.askopenfilename(initialdir = "/",
+                                          title = "Select secret key",
+                                          filetypes = (("Key files", "*.key"),
+                                                        ("All files", "*.*")))
+    s_key_loc_label.configure(text = "Currently selected secret key: " + key_location)
+    update_key_location(key_location)
+    
+def button_action_browse_pw_file():
+    pwfile_location = filedialog.askopenfilename(initialdir = "/",
+                                          title = "Select password file",
+                                          filetypes = (("Text files", "*.txt"),
+                                                        ("All files", "*.*")))
+    pw_file_loc_label.configure(text = "Currently selected password file: " + pwfile_location)
+    update_pwfile_location(pwfile_location)
 
 # Show or hide password input
 def show_hide_pwd():
@@ -157,8 +164,8 @@ help_menu.add_command(label="About", command=get_info_dialog)
 pwgen_button = Button(window, text="Generate password", command=button_action_genpw)
 userpw_button = Button(window, text="Add existing password", command=button_action_add_exist_pw)
 strength_check_button = Button(window, text="Check", command=strength_check)
-confirm_key_loc_button = Button(window, text="Confirm key location", command=set_key_location)
-confirm_pwfile_loc_button = Button(window, text="Confirm PW file location", command=set_pwfile_location)
+select_key_button = Button(window, text="Browse secret key", command=button_action_browse_key_file)
+select_pw_button = Button(window, text="Browse password file", command=button_action_browse_pw_file)
 
 # Hidden password button
 visibility = IntVar()
@@ -183,10 +190,10 @@ existing_pass = Entry(window, bd=5, width=40, show="*")
 existing_description_label = Label(window, text="Service-description: ")
 existing_description = Entry(window, bd=5, width=40)
 
-s_key_loc_label = Label(window, text="Secret key location: ")
+s_key_loc_label = Label(window, text = "Currently selected secret key: ")
 s_key_loc = Entry(window, bd=5, width=40)
 
-pw_file_loc_label = Label(window, text="Password file location: ")
+pw_file_loc_label = Label(window, text = "Currently selected password file: ")
 pw_file_loc = Entry(window, bd=5, width=40)
 
 strength_label = Label(window)
@@ -216,14 +223,11 @@ switch_word_to_phrase_button.grid(row=3, column=5, pady=0, padx=0)
 strength_check_button.grid(row=6, column=1, pady=0, padx=0)
 strength_label.grid(row=7, column=1, pady=0, padx=0)
 
-s_key_loc_label.grid(row=8, column=0, pady=0, padx=0)
-pw_file_loc_label.grid(row=9, column=0, pady=10, padx=0)
+s_key_loc_label.grid(row=8, column=1, pady=0, padx=0)
+pw_file_loc_label.grid(row=9, column=1, pady=10, padx=0)
 
-s_key_loc.grid(row=8, column=1, pady=0, padx=0)
-pw_file_loc.grid(row=9, column=1, pady=10, padx=0)
-
-confirm_key_loc_button.grid(row=8, column=2, pady=0, padx=0)
-confirm_pwfile_loc_button.grid(row=9, column=2, pady=10, padx=0)
+select_key_button.grid(row=8, column=0, pady=0, padx=0)
+select_pw_button.grid(row=9, column=0, pady=10, padx=20)
 
 menu.add_cascade(label="File", menu=file_menu)
 menu.add_cascade(label="Help", menu=help_menu)
