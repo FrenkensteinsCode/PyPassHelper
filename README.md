@@ -25,4 +25,4 @@ Procedure: Decrypt file -> Write to file -> Encrypt file again
 This program has been tested on Windows 10 (22H2) using Python 3.11.2 and Linux (kali-rolling 2024.1) using Python 3.11.8 so far.
 
 ## Preview
-![PyPassHelper](![image](https://github.com/user-attachments/assets/ab5bd79f-61d7-4e18-aa3c-24d0db402035)
+![image](https://github.com/user-attachments/assets/ab5bd79f-61d7-4e18-aa3c-24d0db402035)
