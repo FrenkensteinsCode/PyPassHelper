@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 from pathlib import Path
-import platform
+import platform#
 
 # Info and ReadMe functions
 def get_info_dialog():
@@ -188,10 +188,10 @@ existing_pass = Entry(window, bd=5, width=40, show="*")
 existing_description_label = Label(window, text="Service-description: ")
 existing_description = Entry(window, bd=5, width=40)
 
-s_key_loc_label = Label(window, text = "Currently selected secret key: ")
+s_key_loc_label = Label(window, text = f"Default location is:  {get_key_location()}")
 s_key_loc = Entry(window, bd=5, width=40)
 
-pw_file_loc_label = Label(window, text = "Currently selected password file: ")
+pw_file_loc_label = Label(window, text = f"Default location is: {get_pwfile_location()}")
 pw_file_loc = Entry(window, bd=5, width=40)
 
 strength_label = Label(window)
