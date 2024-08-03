@@ -11,27 +11,29 @@ def get_info_dialog():
 **********************\n\
 Title: PyPassHelper\n\
 Author: @FrenkensteinsCode\n\
-Version: 1.3.0\n\
+Version: 1.3.1\n\
 **********************"
     messagebox.showinfo(message=m_text, title = "About")
 
 def get_readme_generator():
     rg_text = "\
 The user needs to enter a length value for their password and a brief name or description for the service for which they wish to create a password for.\n\
-By clicking the <Generate password> button, the password will be written to the password file. The checkbutton <Passphrase> can be pressed in order to \n\
-generate a passphrase consisting of random words of the wordlists instead of a password. In this case, the length is not needed as an input.\n\
+\n\
+By clicking the <Generate password> button, the password will be written to the password file. The checkbutton <Passphrase> can be pressed in order to generate a \n\
+passphrase consisting of random words of the wordlists instead of a password. In this case, the length is not needed as an input.\n\
+\n\
 The password-file can be stored anywhere the user wants. It can be selected via the appropriate file browser."
     messagebox.showinfo(message=rg_text, title = "ReadMe PW-Generator")
 
 def get_readme_safe():
     rs_text = "\
-At first, the user needs to create a personal secret key via the File-menu.\n\
-This key needs to be stored securely at all times.\n\
-The key can be stored anywhere the user wants. It can be selected via the appropriate file browser.\n\
-It serves as an encryption/decryption key for the password file.\n\
-The encryption and decryption can be performed via the buttons in the File-menu.\n\
-An already existing password can be entered via the <Existing password> and <Service-description> fields.\n\
-Please note: The file has to be decrypted before making new entries. Otherwise no entry can be made!\n\
+At first, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times.\n\
+The key can be stored anywhere the user wants. It can be selected via the appropriate file browser. It serves as an encryption/decryption key for the password file.\n\
+\n\
+The encryption and decryption can be performed via the buttons in the File-menu. The File-menu can also be used to view the contents of the password file.\n\
+\n\
+An already existing password can be entered via the <Existing password> and <Service-description> fields. Please note: The file has to be decrypted before making new entries. Otherwise no entry can be made!\n\
+\n\
 Procedure: Decrypt file -> Write to file -> Encrypt file again"
     messagebox.showinfo(message=rs_text, title = "ReadMe PW-Safe")
 
