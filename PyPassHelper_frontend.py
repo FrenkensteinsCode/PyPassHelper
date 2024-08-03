@@ -82,7 +82,16 @@ def button_action_enc():
 
 def button_action_dec():
     decrypt_file()
-    option_label.config(text="Decrypted successfully!")    
+    option_label.config(text="Decrypted successfully!")
+
+def button_action_open_file():
+    pw_file = get_pwfile_location()
+    if(os.path.isfile(pw_file)):
+        os.system(pw_file)
+        option_label.config(text=f"Opened file at {pw_file}")
+
+    else:
+        option_label.config(text=f"No password file found at {pw_file}")
 
 def button_action_genpw():
     pwfile_path = Path(get_pwfile_location())
@@ -149,6 +158,8 @@ file_menu.add_separator()
 file_menu.add_command(label="Encrypt File", command=button_action_enc)
 file_menu.add_separator()
 file_menu.add_command(label="Decrypt File", command=button_action_dec)
+file_menu.add_separator()
+file_menu.add_command(label="Open File", command=button_action_open_file)
 file_menu.add_separator()
 file_menu.add_command(label="Exit", command=window.quit)
 
