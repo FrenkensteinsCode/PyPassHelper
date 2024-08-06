@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 from pathlib import Path
-import platform#
+import platform
 
 # Info and ReadMe functions
 def get_info_dialog():
@@ -89,9 +89,11 @@ def button_action_dec():
 def button_action_open_file():
     pw_file = get_pwfile_location()
     if(os.path.isfile(pw_file)):
-        os.system(pw_file)
+        if platform.system() == "Windows":
+            os.system(f"start {pw_file}")
+        else:
+            os.system(f"xdg-open {pw_file}")
         option_label.config(text=f"Opened file at {pw_file}")
-
     else:
         option_label.config(text=f"No password file found at {pw_file}")
 
