@@ -7,8 +7,8 @@ A lightweight password-manager written in Python!
 
 ## Usage
 * Download or clone the repository to your disk
-* Execute the frontend-file of PyPassHelper
-  * <code>Python3 .\PyPassHelper_frontend.py</code>
+* Execute the PyPassHelper-file
+  * <code>Python3 .\PyPassHelper.py</code>
 * To exit the program, click the X or go to File -> Exit
 
 ## Password Generator
@@ -19,7 +19,8 @@ By clicking the "Generate password" button, the password will be written to the 
 The password-file can be stored anywhere the user wants. It can be selected via the appropriate file browser.
 
 ## Password Safe
-At first, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times. The key can be stored anywhere the user wants. It can be selected via the appropriate file browser. It serves as an encryption/decryption key for the password file.
+At first, the user needs to create the PyPassHelper directory at the default location via the File-menu.
+Afterwards, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times. The key as well as the password file can be stored anywhere the user wants. It can later be selected via the appropriate file browser. The key serves as an encryption/decryption key for the password file.
 
 The encryption and decryption can be performed via the buttons in the File-menu. The File-menu can also be used to view the contents of the password file.
 
