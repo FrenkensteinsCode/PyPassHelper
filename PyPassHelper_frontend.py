@@ -26,10 +26,10 @@ The password-file can be stored anywhere the user wants. It can be selected via 
     messagebox.showinfo(message=rg_text, title = "ReadMe PW-Generator")
 
 def get_readme_safe():
-    rs_text = "\" \
+    rs_text = "\
 At first, the user needs to create the PyPassHelper directory at the default location via the File-menu.\n\
 Afterwards, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times.\n\
-The key can be stored anywhere the user wants. It can later be selected via the appropriate file browser. It serves as an encryption/decryption key for the password file.\n\
+The key as well as the password file can be stored anywhere the user wants. It can later be selected via the appropriate file browser. The key serves as an encryption/decryption key for the password file.\n\
 \n\
 The encryption and decryption can be performed via the buttons in the File-menu. The File-menu can also be used to view the contents of the password file.\n\
 \n\
@@ -260,6 +260,3 @@ menu.add_cascade(label="File", menu=file_menu)
 menu.add_cascade(label="Help", menu=help_menu)
 
 window.config(menu=menu)  
-
-# Main loop
-window.mainloop()
