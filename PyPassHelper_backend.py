@@ -7,8 +7,6 @@ import stat
 ## File location routines
 home_dir = os.path.expanduser("~")
 path = os.path.join(home_dir, "PyPassHelper")
-if not os.path.exists(path):
-    os.makedirs(path)
 key_location = os.path.join(path, "secret.key")
 pwfile_location = os.path.join(path, "pwfile.txt")
 
@@ -50,6 +48,12 @@ def key_gen():
 
     with open(key_location, 'wb') as enc_key_file:
         enc_key_file.write(encryption_key)
+
+def default_pwdir_gen():
+    ''' Generate the PyPassHelper directory at the default location '''
+
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 def encrypt_file():
     ''' Encrypt a file using a key-file.

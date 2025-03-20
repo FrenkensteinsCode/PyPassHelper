@@ -11,7 +11,7 @@ def get_info_dialog():
 **********************\n\
 Title: PyPassHelper\n\
 Author: @FrenkensteinsCode\n\
-Version: 1.3.1\n\
+Version: 1.3.2\n\
 **********************"
     messagebox.showinfo(message=m_text, title = "About")
 
@@ -26,9 +26,10 @@ The password-file can be stored anywhere the user wants. It can be selected via 
     messagebox.showinfo(message=rg_text, title = "ReadMe PW-Generator")
 
 def get_readme_safe():
-    rs_text = "\
-At first, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times.\n\
-The key can be stored anywhere the user wants. It can be selected via the appropriate file browser. It serves as an encryption/decryption key for the password file.\n\
+    rs_text = "\" \
+At first, the user needs to create the PyPassHelper directory at the default location via the File-menu.\n\
+Afterwards, the user needs to create a personal secret key via the File-menu. This key needs to be stored securely at all times.\n\
+The key can be stored anywhere the user wants. It can later be selected via the appropriate file browser. It serves as an encryption/decryption key for the password file.\n\
 \n\
 The encryption and decryption can be performed via the buttons in the File-menu. The File-menu can also be used to view the contents of the password file.\n\
 \n\
@@ -75,8 +76,16 @@ def strength_check():
 
 # Button actions
 def button_action_keygen():
-    key_gen()
-    option_label.config(text=f"{key_location} has been created. Keep secure at all times!")
+    key_dir = os.path.dirname(key_location)
+    try:
+        key_gen()
+        option_label.config(text=f"{key_location} has been created. Keep secure at all times!")
+    except FileNotFoundError:
+        option_label.config(text=f"The directory {key_dir} has not been found.\nPlease make sure it exists before creating a new key.")
+
+def button_action_pwdirgen():
+    default_pwdir_gen()
+    option_label.config(text=f"{path} has been created.")
 
 def button_action_enc():
     encrypt_file()
@@ -157,6 +166,8 @@ menu = Menu(window)
 file_menu = Menu(menu, tearoff=0)
 help_menu = Menu(menu, tearoff=0)
 
+file_menu.add_command(label="Generate PyPassHelper Directory", command=button_action_pwdirgen)
+file_menu.add_separator()
 file_menu.add_command(label="Generate Secret Key File", command=button_action_keygen)
 file_menu.add_separator()
 file_menu.add_command(label="Encrypt File", command=button_action_enc)
