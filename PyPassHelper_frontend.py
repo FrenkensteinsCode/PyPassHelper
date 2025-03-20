@@ -39,12 +39,15 @@ Procedure: Decrypt file -> Write to file -> Encrypt file again"
     messagebox.showinfo(message=rs_text, title = "ReadMe PW-Safe")
 
 def genPw():
-    length = int(pw_length.get())
-    service = description.get()
-    password = create_password(length)
-    password = shuffle(password, length)
-    option_label.config(text=f"Password for service {service} written to {get_pwfile_location()}")
-    write_password(password, service)
+    try:
+        length = int(pw_length.get())
+        service = description.get()
+        password = create_password(length)
+        password = shuffle(password, length)
+        option_label.config(text=f"Password for service {service} written to {get_pwfile_location()}")
+        write_password(password, service)
+    except ValueError:
+        option_label.config(text=f"Oops, something went wrong. Did you set the Password-length?")
 
 def genPp():
     if platform.system() == "Windows":
