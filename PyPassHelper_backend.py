@@ -190,6 +190,7 @@ def create_passphrase_from_wordlists(wordlists: list[str]) -> str:
 
         for word in random_words:
             passphrase += word
+            passphrase += chr(rd.randint(33,43)) # Special characters add more complexity
 
     return passphrase
 
